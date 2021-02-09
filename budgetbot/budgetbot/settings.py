@@ -95,16 +95,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Настройки бота
-BOT_TOKEN = '1098988626:AAFHabSpA9QLfnWO16S5imVDrcRa_8NZTys'
-ADMIN_ID = 456257219
-# Настройки Яндекс.Директ
-YDIRECT_TOKEN = 'AgAAAAA36d3IAAUEdM6y1spIlUCkh88g7lPoh0M'
-# Максимальный остаток дней для рассылки уведомлений
-NOTIFI_DAYS = 15
-
-
 try:
     from .local_settings import *
 except ImportError:
     from .prod_settings import *
+
+# Максимальный остаток дней для рассылки уведомлений
+NOTIFI_DAYS = 15
