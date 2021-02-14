@@ -19,5 +19,5 @@ from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("notifimanager.urls")),
+    path('bot/', include("notifimanager.urls")),
 ]
