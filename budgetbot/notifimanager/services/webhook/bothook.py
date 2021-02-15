@@ -46,13 +46,25 @@ def do_echo(update: Update, context: CallbackContext):
             'name': user_name,
         }
     )
+    command = text.split(' ')[0]
     if not profile.verify:
-        reply_text = 'Ваш аккаунт не верифицирован. Отправьте запрос на верификацию'
+        if command == '/start':
+            reply_text = f'Ваш chat_id <b>{chat_id}</b>.\nНеобходимо пройти верификацию.\nОтправьте на ' \
+                         f'oleg.barabanov@mdp.digital письмо с темой:\n<i>Верификация {chat_id} для ' \
+                         f'context_mdp_bot</i>\nЗапросы принимаются только с корпоративной почты.'
+        else:
+            reply_text = f'Ваш аккаунт не верифицирован. Отправьте запрос.\nВаш chat_id <b>{chat_id}</b>'
     else:
-        command = text.split(' ')[0]
         if command in command_list:
             reply_text = command_list[command](profile_id=profile.id, params=text[len(command) + 1:].replace(' ', ''))
             print(reply_text)
+        elif command == '/help':
+            reply_text = 'На текущий момент доступны следующие команды:\n\n<b>yadd </b><i>логин(ы) ' \
+                         'Яндекс.Директа</i>\nПривязывает логин(ы) к Вашему профилю для отправки уведомлений. ' \
+                         'Несколько логинов необходимо указывать через запятую.\n\n<b>ydel </b><i>логин(ы) ' \
+                         'Яндес.Директа</i>\n\nОтвязывает логин(ы) от Вашего профиля, уведомления по ним приходить не ' \
+                         'будут. Несколько логинов необходимо указывать через запятую.\n\n<b>mylogins</b> - выводит ' \
+                         'список привязанных логинов и остатки бюджетов по ним.'
         else:
             reply_text = 'Команда не найдена'
 

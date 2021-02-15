@@ -127,7 +127,7 @@ def my_logins(profile_id: int, params: str):
         else:
             balance = dict.fromkeys(logins_list, '-')
 
-        msg_text = 'Логин\tОстаток\n'
+        msg_text = '<b>Логин\t-\tОстаток</b>\n\n'
         print(balance)
         for key, value in balance.items():
             value = f'{float(value):,}'.replace(',', ' ')
@@ -135,6 +135,7 @@ def my_logins(profile_id: int, params: str):
             msg_text += f"{key} - <b>{value} руб.</b>\n"
 
     return msg_text
+
 
 def ydel(profile_id: int, params: str):
     msg = ''
