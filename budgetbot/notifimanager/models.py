@@ -32,7 +32,8 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         if self.was_veryfy == False and self.verify==True:
-            message = 'Ваш аккаунт верифицирован, Вы можете отправлять команды боту!'
+            message = 'Ваш аккаунт верифицирован, Вы можете отправлять команды боту!\n' \
+                      'Чтобы получить список актуальных команд используйте /help'
         elif self.was_veryfy == True and self.verify == False:
             message = 'Ваш аккаунт заблокирован, Вы больше не можете пользоваться ботом.\nДля восстановления доступа обратитесь к администратору'
         try:
