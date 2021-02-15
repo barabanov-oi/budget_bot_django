@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls import include
+from notifimanager.services.webhook.bothook import webhook_handler
+from django.conf import settings
+BOT_URL = f'bot/{settings.BOT_TOKEN[:7]}/{settings.BOT_TOKEN}'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('bot/', include("notifimanager.urls")),
+    path(BOT_URL, webhook_handler),
 ]
