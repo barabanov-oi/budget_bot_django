@@ -84,7 +84,7 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
             message += f'Логин{plural} привязан{plural} ранее\n{", ".join(list(user_login))}\n'
 
         if len(activate_logins) > 0:
-            login_ids = DirectAccount.objects.filter(login__in=added_logins)
+            login_ids = DirectAccount.objects.filter(login__in=activate_logins)
             login_ids = list(login_ids.values_list('pk', flat=True))
             for pk in login_ids:
                 _, created = BalanceNotice.objects.get_or_create(
