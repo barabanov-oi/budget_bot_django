@@ -33,7 +33,7 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
     """
     return_data = {}
     profile, _ = Profile.objects.get_or_create(
-        chat_id=456257219,
+        chat_id=profile_id,
     )
     # список для активированных логинов
     activate_logins = []
