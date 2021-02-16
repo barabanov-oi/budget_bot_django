@@ -56,7 +56,7 @@ def do_echo(update: Update, context: CallbackContext):
             reply_text = f'Ваш аккаунт не верифицирован. Отправьте запрос.\nВаш chat_id <b>{chat_id}</b>'
     else:
         if command in command_list:
-            reply_text = command_list[command](profile_id=int(profile.id), params=text[len(command) + 1:].replace(' ',
+            reply_text = command_list[command](profile_id=int(profile.chat_id), params=text[len(command) + 1:].replace(' ',
                                                                                                                 ''))
             print(reply_text)
         elif command == '/help':
