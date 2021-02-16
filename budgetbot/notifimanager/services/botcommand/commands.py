@@ -89,7 +89,7 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
             for pk in login_ids:
                 _, created = BalanceNotice.objects.get_or_create(
                     profile_id=profile.pk,
-                    directAccount_id=id,
+                    directAccount_id=pk,
                 )
             plural = add_on.plural_sfx(activate_logins)
             message += f"Добавлен{plural} логин" \
