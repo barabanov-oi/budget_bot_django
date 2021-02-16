@@ -50,11 +50,12 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
     # проверяем наличие логинов из запроса в общей базе
     added_logins = DirectAccount.objects.filter(login__in=logins) #.values_list('login', flat=True)
     if len(added_logins) > 0:
+        if len(added_logins.filter(active=False)) > 0:
+            added_logins.filter(active=False).update(active=True)
+
         added_logins = list(added_logins.values_list('login', flat=True))
         activate_logins.extend(added_logins)
         logins = list(set(logins) - set(added_logins))
-        if len(added_logins.filter(active=False)) > 0:
-            added_logins.filter(active=False).update(active=True)
 
     if len(logins) > 0:
         direct = YClient(settings.YDIRECT_TOKEN)
