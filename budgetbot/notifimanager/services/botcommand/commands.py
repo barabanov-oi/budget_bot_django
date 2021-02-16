@@ -88,7 +88,7 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
             login_ids = list(login_ids.values_list('pk', flat=True))
             for pk in login_ids:
                 _, created = BalanceNotice.objects.get_or_create(
-                    profile_id=profile.pk,
+                    profile_id=profile.chat_id,
                     directAccount_id=pk,
                 )
             plural = add_on.plural_sfx(activate_logins)
