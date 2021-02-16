@@ -50,7 +50,9 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
     # проверяем наличие логинов из запроса в общей базе
     added_logins = DirectAccount.objects.filter(login__in=logins) #.values_list('login', flat=True)
     if len(added_logins) > 0:
-        logins = list(set(logins) - set(added_logins.values_list('login', flat=True)))
+        added_logins = list(added_logins.values_list('login', flat=True))
+        activate_logins.extend(added_logins)
+        logins = list(set(logins) - set(added_logins))
         if len(added_logins.filter(active=False)) > 0:
             added_logins.filter(active=False).update(active=True)
 
@@ -63,10 +65,7 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
                 login_obj, _ = DirectAccount.objects.get_or_create(
                     login=login,
                 )
-                _, created = BalanceNotice.objects.get_or_create(
-                    profile_id=profile.id,
-                    directAccount_id=login_obj.id,
-                )
+
             activate_logins.extend(amount_logins)
             return_data["added_login"] = amount_logins
 
@@ -84,6 +83,13 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
             message += f'Логин{plural} привязан{plural} ранее\n{", ".join(list(user_login))}\n'
 
         if len(activate_logins) > 0:
+            login_ids = DirectAccount.objects.filter(login__in=added_logins)
+            login_ids = list(login_ids.values_list('pk', flat=True))
+            for pk in login_ids:
+                _, created = BalanceNotice.objects.get_or_create(
+                    profile_id=profile.pk,
+                    directAccount_id=id,
+                )
             plural = add_on.plural_sfx(activate_logins)
             message += f"Добавлен{plural} логин" \
                        f"{plural}: " \
