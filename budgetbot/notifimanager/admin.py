@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Message, DirectAccount, BalanceNotice
+from .models import Profile, Message, DirectAccount, BalanceNotice, YandexYestStat
 from .forms import ProfileForm
 
 @admin.register(Profile)
@@ -33,3 +33,10 @@ class UserAdmin(admin.ModelAdmin):
         return False
 
     list_display = ('profile', 'directAccount')
+
+@admin.register(YandexYestStat)
+class UserAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return False
+
+    list_display = ('date', 'login', 'spend', 'balance', 'days')
