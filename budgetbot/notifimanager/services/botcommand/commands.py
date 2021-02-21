@@ -40,7 +40,7 @@ def yaddLogin(params: str, profile_id: int, msg_format=True):
     # получаем список переданных логинов
     logins = list(set(params.replace(' ', '').split(',')))
     # получаем список ранее привязанных логинов
-    user_login = set(BalanceNotice.objects.filter(profile__id=profile_id).values_list('directAccount__login',
+    user_login = set(BalanceNotice.objects.filter(profile__chat_id=profile_id).values_list('directAccount__login',
                                                                                          flat=True))
     # получаем пересечение множеств переданных и привязанных логинов
     # в user_login остаются ранее привязанные логины
