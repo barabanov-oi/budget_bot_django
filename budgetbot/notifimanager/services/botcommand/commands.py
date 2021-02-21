@@ -147,14 +147,14 @@ def my_logins(profile_id: int, params: str):
 def ydel(profile_id: int, params: str):
     msg = ''
     # список привязанных логинов
-    user_logins = set(BalanceNotice.objects.filter(profile__id=profile_id).values_list('directAccount__login',
+    user_logins = set(BalanceNotice.objects.filter(profile__chat_id=profile_id).values_list('directAccount__login',
                                                                                          flat=True))
     # логины из команды
     command_logins = set(params.split(',')) - {',', ''}
     # удаляем пустые значения (если в конце или начале запроса запятые)
 
     # логины, привязанные к другим пользователям
-    other_logins = set(BalanceNotice.objects.exclude(profile__id=profile_id).values_list('directAccount__login',
+    other_logins = set(BalanceNotice.objects.exclude(profile__chat_id=profile_id).values_list('directAccount__login',
                                                                                        flat=True))
     bad_logins = set(command_logins - user_logins)
     if len(bad_logins) > 0:
@@ -164,7 +164,8 @@ def ydel(profile_id: int, params: str):
     # если остались логины привязанные к профилю, удаляем привязку, иначе добавляем сообщение, что логинов на
     # удаление нет
     if len(command_logins) > 0:
-        BalanceNotice.objects.filter(profile__id=profile_id, directAccount__login__in=list(command_logins)).delete()
+        BalanceNotice.objects.filter(profile__chat_id=profile_id, directAccount__login__in=list(
+            command_logins)).delete()
         msg += f'\nУдален(ы): <b>{", ".join(list(command_logins))}</b>.'
     else:
         msg += '\nНа удаление нет логинов, привязанных к Вашему профилю'
