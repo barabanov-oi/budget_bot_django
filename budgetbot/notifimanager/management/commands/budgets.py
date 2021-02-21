@@ -7,10 +7,6 @@ from telegram.utils.request import Request
 from notifimanager.models import DirectAccount
 from notifimanager.models import YandexYestStat
 from notifimanager.services.ydirectapi.ydirect import YClient
-from notifimanager.services.botcommand.commands import command_list
-from notifimanager.services.botcommand import add_on
-
-from tapi_yandex_direct import YandexDirect
 
 from datetime import datetime
 

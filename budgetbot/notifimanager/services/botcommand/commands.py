@@ -17,7 +17,7 @@ def ylogin_list(profile_id: int):
     :param profile_id: идентификатор клиента (chat id)
     :return: список логинов
     '''
-    return list(BalanceNotice.objects.filter(profile__id=profile_id).values_list('directAccount__login',
+    return list(BalanceNotice.objects.filter(profile__chat_id=profile_id).values_list('directAccount__login',
                                                                                          flat=True))
 
 
